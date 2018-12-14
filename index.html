@@ -10,12 +10,30 @@
 
 </head>
 <body>
-    <p>Here goes the image</p>
+    
+    <div class="container text-center">
+        <div class="row ">
+            <div class="col-lg-12">
+                <img src="assets/images/header.png" alt="" class="img-fluid w-75">
+            </div>
+        </div>
+        
+        <div class="row mt-3">
+            <div class="col-lg-12">
+                <div class="card mx-auto" style="width: 28rem;">
+                    <img class="card-img-top" src="assets/images/someDrinks.jpg" alt="Card image cap" id="drinkPic">
+                    <div class="card-body">
+                        <h5 class="card-title">Guess the drink and learn a new recipe</h5>
+                        <p class="card-text" id="wins"></p>
+                        <a href="#" class="btn btn-primary" id="drink"></a>
+                        <p class="card-text" id="guessesLeft"></p>
+                        <p class="card-text" id="guessLetter"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <p id="wins"></p>
-    <p id="drink">Word: </p>
-    <p id="guessesLeft"></p>
-    <p id="guessLetter"></p>
+    </div>
     
     <script src="assets/javascript/game.js"></script>
 </body>
