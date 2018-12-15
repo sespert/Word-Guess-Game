@@ -2,22 +2,29 @@
 // GLOBAL VARIABLES
 // ==========================================================================
 //The computer is going to choose randomly an element of an array of drinks at the beginning of the game
-var drinks = ["martini", "mojito", "cosmopolitan", "capipirinha", "sidecar",
+var drinks = ["martini", "mojito", "cosmopolitan", "caipirinha", "sidecar",
 "negroni", "margarita", "daiquiri", "manhattan", "gimlet", "sazerac", "screwdriver",
 "americano", "bellini", "mimosa"];
 var randomDrink = null;
+var drinkIndex;
 //We need a variable of letters to check that the user presses only letters
 var letters = /^[A-Za-z]+$/;
 //We need a counter to display the number of times the user wins 
 var wins = 0;
 //When the game starts you have 12 guesses
 var guesses = 12;
+//When the user wins the image displayed changes, so we need an array of images of each drink
+var drinkImg = ["assets/images/mojito.jpeg", "assets/images/martini.png", "assets/images/cosmopolitan.jpg", "assets/images/caipirinha.jpg",
+"assets/images/sidecar.png", "assets/images/negroni.jpg", "assets/images/margarita.jpg", "assets/images/daiquiri.jpg",
+"assets/images/manhattan.jpg", "assets/images/gimlet.jpg", "assets/images/sazerac.jpg", "assets/images/screwdriver.jpg", 
+"assets/images/americano.jpg", "assets/images/bellini.jpg", "assets/images/mimosa.jpg"];
 //The stats are written to the screen
 var winCount = document.getElementById("wins");
 var drinkChosen = document.getElementById("drink");
 var guessesCount = document.getElementById("guessesLeft");
 var userChoice = document.getElementById("guessLetter");
 var drinkImage = document.getElementById("drinkPic");
+var image = document.getElementById("drinkPic");
 // ==========================================================================
 //GAME OBJECT
 // ==========================================================================
@@ -41,6 +48,7 @@ var game = {
     //At the beginning of each game a new word is picked randomly
     chooseDrink: function() {
         randomDrink = drinks[(Math.floor(Math.random() * drinks.length))];
+        drinkIndex = drinks.indexOf(randomDrink);
         this.drinkArray = randomDrink.split("");
 
         for (var i=0; i<this.drinkArray.length; i++) {
@@ -88,6 +96,10 @@ var game = {
         this.resetStats();
         this.chooseDrink();
         this.updateStats();
+    },
+    //Function to change image when user wins
+    changeImage: function() {
+        drinkImage.src = drinkImg[drinkIndex];
     }
 };
 
@@ -124,14 +136,14 @@ document.onkeyup = function(event) {
             }
             //If user guesses all the letters execute the winning function
         }   else if (game.screenWordArray.includes("-") == false) {
-        
+            game.changeImage();
             game.winGame();
             //If not and he ran out of guesses, execute the loosing function
         }   else if (guesses === 0) {
-        
             game.lostGame();
-
         }
+
+        
     } else {
         //If user presses a key that is not a letter, alert him
         alert("Please press only letters");

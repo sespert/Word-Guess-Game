@@ -2,3 +2,10 @@ body {
     background-image: url("../images/diagonal-squares.png");
 }
 
+#footer {
+    background-color:black;
+    font-family: 'Georgia', Times, Times New Roman, serif; 
+    color: #ffffff;  
+    height: 50px;
+   
+}
