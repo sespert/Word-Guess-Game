@@ -96,6 +96,8 @@ var game = {
         this.resetStats();
         this.chooseDrink();
         this.updateStats();
+        drinkImage.src = "assets/images/someDrinks.jpg";
+
     },
     //Function to change image when user wins
     changeImage: function() {
@@ -108,44 +110,46 @@ var game = {
 // ==========================================================================
 //Game starts with computer picking a word
 game.chooseDrink();
+
 //And we send the info to the screen so the user can start the game
 game.updateStats();
+
 // Then the user chooses a letter, 
-document.onkeyup = function(event) {
+document.onkeyup = function(event) {  
     var key = event.key.toLowerCase();
+
     //This function checks that the letter is included in the computer word
     if (key.match(letters)) {
-        //If word is still incomplete and there are guesses left, execute
-        if ((game.screenWordArray.includes("-") == true) && (guesses > 0)) {
-            //If the letter pressed belongs to the word execute
-            if (game.drinkArray.includes(key) == true) {
-                //If the user hits a letter already chosen
-                if (game.screenWordArray.includes(key)){
-                    alert("You've already chose that lettet");
-                } else {
-                //else execute function to fill the word with the correct letter
-                    game.correctLetter(key);
-                }
-                //If letter is not included in the word, # of guesses go down
-            } else if (game.drinkArray.includes(key) == false) {
+        //If there are guesses left, execute this
+        if (guesses > 0) {
+            //If the user hits a letter already chosen
+            if (game.screenWordArray.includes(key)){
+                alert("You've already chose that letter");
+            //If letter is contained in the picked word execute function to fill the word with the correct letter
+            } else  if (game.drinkArray.includes(key) == true){
+                game.correctLetter(key);
+                //If user guesses all the letters execute the winning function
+                if (game.screenWordArray.includes("-") == false) {
+                    game.changeImage();
+                    game.winGame();
+                }  
+            //If letter is not in the picked word 
+            } else {
+                //If that letter has already been chosen
                 if (game.guessIncorrect.includes(key)){
-                    alert("You've already chose that lettet");
+                    alert("You've already chose that letter");
+                //Else fill the incorrect letter array
                 } else {
                 game.wrongLetter(key);
+                }
             }
-            }
-            //If user guesses all the letters execute the winning function
-        }   else if (game.screenWordArray.includes("-") == false) {
-            game.changeImage();
-            game.winGame();
-            //If not and he ran out of guesses, execute the loosing function
-        }   else if (guesses === 0) {
-            game.lostGame();
+        //If user ran out of guesses, execute the loosing function
+        } else if (guesses === 0) {
+        game.lostGame();
         }
 
-        
+    //If user presses a key that is not a letter, alert him  
     } else {
-        //If user presses a key that is not a letter, alert him
         alert("Please press only letters");
     }
 };
